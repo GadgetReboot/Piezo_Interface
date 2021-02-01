@@ -50,11 +50,11 @@
 // individual instrument playback levels - tweaked as needed to match volumes
 #define AudioSampleKickLevel             0.3
 #define AudioSampleSnareLevel            0.4
-#define AudioSampleTom12Level            0.4
+#define AudioSampleTom12Level            0.5
 #define AudioSampleHihat_closedLevel     0.4
 #define AudioSampleCrash14_chokeLevel    0.4
 #define AudioSampleCrash14Level          0.4
-#define AudioSampleTommidLevel           0.4
+#define AudioSampleTommidLevel           0.3
 #define AudioSampleTom16Level            0.4
 
 const byte numChannels = 8;                     // number of trigger input channels to read
@@ -237,7 +237,7 @@ void scanChannels() {
       if (chReading > peakLevel[i]) {                               // if there is a higher peak detected during settling time, store it as the new peak
         peakLevel[i] = chReading;
       }
-      else if (chReading <= (peakLevel[i] - somePercentOfMax)) {    // if the input level has dropped 10% lower than the peak, consider trigger finalized
+      else if (chReading <= (peakLevel[i] - somePercentOfMax)) {    // if the input level has dropped some amount lower than the peak, consider trigger finalized
         float level = (peakLevel[i] / float(adcMax));               // set sample playback level based on peak level detected (touch sensitive playback)
 
         Serial.print("A"); Serial.print(inputPin[i]);
